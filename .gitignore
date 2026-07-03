@@ -1,0 +1,45 @@
+# Env / secrets
+.env
+*.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+*.tsbuildinfo
+
+# Data (large / regenerable)
+data/pdfs/*
+!data/pdfs/.gitkeep
+data/chroma/*
+!data/chroma/.gitkeep
+*.tar
+
+# Experiment / eval scratch outputs
+experiments/chunking/results/*
+!experiments/chunking/results/.gitkeep
+experiments/chunking/scratch_chroma/
+eval/results/*
+!eval/results/.gitkeep
+
+# Alembic
+backend/app/db/migrations/__pycache__/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log

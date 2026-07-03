@@ -1,0 +1,31 @@
+arxiv_id: 2606.31984 | section: experiments | page: 10 | match_score: 99.1
+  Q: How does the performance of GR2 scale with model size, specifically in terms of R@3 lift?
+  A: Sweeping over Qwen-3 from 1.7B to 32B parameters, we observe R@3 lift grows monotonically with model size.
+
+arxiv_id: 2606.31946 | section: experiments | page: 10 | match_score: 100.0
+  Q: How many samples and scenes does the final test set comprise?
+  A: The final test set comprises approximately 3 _,_ 000 samples, covering 100 representative scenes, over 20 _,_ 000 action patterns, and 16 distinct camera operation types.
+
+arxiv_id: 2606.31915 | section: experiments | page: 8 | match_score: 100.0
+  Q: What are the Jaccard index values reported for Fast JK+ and JK+ at a sample size of n=100 and p=100 with λ=1?
+  A: (n=100, p=100,_λ_=1)|0.9997|
+
+arxiv_id: 2606.31956 | section: experiments | page: 9 | match_score: 100.0
+  Q: What were the average preprocessing and inference times per image when using the SiPa model?
+  A: Preprocessing took on average 0.5 ms per image, inference 2.8. With all other processes, the average speed is around 4 ms per image, or approx. 250 images per second.
+
+arxiv_id: 2606.31941 | section: methodology | page: 2 | match_score: 100.0
+  Q: What is the name of the navigation framework proposed in the paper?
+  A: **LeCropFollow** , a navigation framework that maps high-dimensional visual observations directly to control inputs without explicit state estimation.
+
+arxiv_id: 2606.32032 | section: experiments | page: 46 | match_score: 100.0
+  Q: How many expert annotators were involved in the human annotation study, and how many examples did they annotate?
+  A: We used three expert annotators (graduate students working directly with LLMs) and instructed them to provide preference annotations on 120 examples.
+
+arxiv_id: 2606.32033 | section: experiments | page: 16 | match_score: 100.0
+  Q: What resolution is used for generating ERP panoramas in the experiments?
+  A: we produce ERP panoramas at a resolution of 1024 _×_ 2048 using 50 denoising steps.
+
+arxiv_id: 2606.32002 | section: experiments | page: 7 | match_score: 90.6
+  Q: How many chunks were sampled per corpus in the experiments?
+  A: We sample 512 chunks per corpus.
