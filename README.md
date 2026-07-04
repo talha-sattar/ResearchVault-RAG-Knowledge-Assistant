@@ -1,5 +1,6 @@
 # ResearchVault — Personal Research Knowledge Assistant
 
+![Home Page](./frontend/public/HOME.jpeg)
 A personal RAG (Retrieval-Augmented Generation) assistant over a curated arXiv research
 collection. It searches, summarizes, compares, and answers questions across papers — with
 page-level citations back to the source PDF — and learns your preferences, collections, and

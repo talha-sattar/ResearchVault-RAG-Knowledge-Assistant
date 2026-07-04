@@ -39,6 +39,7 @@ def document_views(
         {
             "id": str(r.id),
             "document_id": str(r.document_id),
+            "document_title": r.document.title if r.document else f"Document {str(r.document_id)[:8]}",
             "view_type": r.view_type.value,
             "viewed_at": r.viewed_at.isoformat(),
         }

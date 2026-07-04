@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { askChat } from "../api/client";
@@ -11,6 +11,11 @@ export default function Chat() {
   const [question, setQuestion] = useState("");
   const [conversationId, setConversationId] = useState<string | undefined>();
   const [messages, setMessages] = useState<{ role: "user" | "assistant"; content: string; msg?: MessageOut }[]>([]);
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, mutation.isPending]);
 
   const mutation = useMutation({
     mutationFn: (q: string) => askChat(q, docParam ? [docParam] : undefined, conversationId),
@@ -30,22 +35,34 @@ export default function Chat() {
   };
 
   return (
-    <div className="max-w-3xl">
-      <h1 className="text-xl font-semibold mb-1">Ask across your papers</h1>
-      <p className="text-sm text-slate-500 mb-4">
-        {docParam ? "Scoped to one paper." : "Searches across your whole indexed collection."}
-      </p>
+    <div className="max-w-4xl mx-auto h-[calc(100vh-8rem)] flex flex-col animation-fade-in">
+      <div className="mb-4">
+        <h1 className="text-2xl font-bold text-slate-800">Ask across your papers</h1>
+        <p className="text-sm font-medium text-slate-500 mt-1 flex items-center gap-2">
+          <span className={`w-2 h-2 rounded-full ${docParam ? 'bg-amber-500' : 'bg-emerald-500'}`}></span>
+          {docParam ? "Scoped to one selected paper." : "Searching across your entire indexed collection."}
+        </p>
+      </div>
 
-      <div className="space-y-4 mb-4">
+      <div className="flex-1 overflow-y-auto pr-4 pb-4 space-y-6 custom-scrollbar">
+        {messages.length === 0 && (
+          <div className="h-full flex flex-col items-center justify-center text-slate-400">
+            <svg className="w-16 h-16 mb-4 text-indigo-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <p>Start a conversation by asking a question below.</p>
+          </div>
+        )}
+        
         {messages.map((m, i) =>
           m.role === "user" ? (
-            <div key={i} className="text-right">
-              <span className="inline-block bg-indigo-600 text-white text-sm rounded-lg px-3 py-2 max-w-lg text-left">
+            <div key={i} className="flex justify-end">
+              <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white text-sm rounded-2xl rounded-tr-sm px-5 py-3 max-w-2xl shadow-md">
                 {m.content}
-              </span>
+              </div>
             </div>
           ) : (
-            <div key={i}>
+            <div key={i} className="flex justify-start max-w-3xl">
               {m.msg && (
                 <AnswerCard
                   answer={{
@@ -61,20 +78,39 @@ export default function Chat() {
             </div>
           )
         )}
-        {mutation.isPending && <p className="text-sm text-slate-400">Thinking...</p>}
+        {mutation.isPending && (
+          <div className="flex justify-start">
+            <div className="bg-white/60 backdrop-blur-sm border border-slate-200 rounded-2xl rounded-tl-sm px-5 py-4 shadow-sm flex items-center gap-2 text-slate-500 text-sm">
+              <div className="flex gap-1">
+                <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+              </div>
+              <span className="ml-2">Searching & thinking...</span>
+            </div>
+          </div>
+        )}
+        <div ref={bottomRef} />
       </div>
 
-      <form onSubmit={submit} className="flex gap-2">
-        <input
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          placeholder="Ask a question..."
-          className="flex-1 border rounded-md px-3 py-2 text-sm"
-        />
-        <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium">
-          Send
-        </button>
-      </form>
+      <div className="mt-auto pt-4 border-t border-slate-200/50">
+        <form onSubmit={submit} className="flex gap-3 bg-white/80 backdrop-blur-md p-2 rounded-2xl shadow-glass border border-white">
+          <input
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            placeholder="Ask a question..."
+            className="flex-1 bg-transparent border-0 px-4 py-2 text-slate-800 placeholder:text-slate-400 focus:ring-0 outline-none"
+            disabled={mutation.isPending}
+          />
+          <button 
+            type="submit" 
+            disabled={mutation.isPending || !question.trim()}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-xl text-sm font-medium transition-colors disabled:opacity-50"
+          >
+            Send
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

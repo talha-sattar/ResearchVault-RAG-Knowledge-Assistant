@@ -1,7 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  @apply bg-slate-50 text-slate-900;
+  @apply bg-slate-50 text-slate-900 font-sans antialiased;
+  background-image: radial-gradient(circle at top right, #e0e7ff 0%, transparent 40%),
+                    radial-gradient(circle at bottom left, #f3e8ff 0%, transparent 40%);
+  background-attachment: fixed;
+  min-height: 100vh;
 }

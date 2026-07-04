@@ -103,6 +103,7 @@ export interface SearchHistoryItem {
 export interface DocumentViewItem {
   id: string;
   document_id: string;
+  document_title?: string;
   view_type: string;
   viewed_at: string;
 }
